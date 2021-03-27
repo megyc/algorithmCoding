@@ -1,1 +1,2 @@
 # algorithmCoding
+这个仓库用来上传日常leetcode刷题，目的是为了熟悉git操作以及记录自己的学习过程
