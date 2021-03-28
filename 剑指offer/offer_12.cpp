@@ -22,12 +22,8 @@ public:
     bool search(vector<vector<char>>& board,string word,int i,int j,int k){
         // cout<<word[k]<<":"<<k<<" i:"<<i<<" j:"<<j<<endl;
         if(k>word.size()-1) return true;//找到路径了
-        if(i<0||i>board.size()-1||j<0||j>board[0].size()-1) {return false;}//超出矩阵范围
-        if(board[i][j] == word[k]){//该字符满足了
-            board[i][j] = '/0';    //标志该位置已经搜索过，避免重复搜索
-        }else{
-            return false;
-        }
+        if(i<0||i>board.size()-1||j<0||j>board[0].size()-1||board[i][j] != word[k]) {return false;}//超出矩阵范围或者该字符不糊和，剪枝
+        board[i][j] = '/0';    //标志该位置已经搜索过，避免重复搜索
         //按右，下，左，上进行搜索
         if(search(board,word,i,j+1,k+1)||search(board,word,i+1,j,k+1)||search(board,word,i,j-1,k+1)||search(board,word,i-1,j,k+1))
             return true;//如果找到了
