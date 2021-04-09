@@ -111,12 +111,34 @@ public:
 		delete[](stat);//回收内存
 	}
 	//快速排序
-	//平均复杂度:O()
-	//最好复杂度:O()
-	//最坏复杂度:O()
-	//空间复杂度:O()
-	//稳定性:
-
+	//平均复杂度:O(nlogn)
+	//最好复杂度:O(nlogn)
+	//最坏复杂度:O(n2)
+	//空间复杂度:O(logn-n)
+	//稳定性:不稳定
+	static void QuickSortEnter(const int arr[], const int length) {//快速排序入口
+		int* stat = new int[length];
+		memcpy(stat, arr, length * sizeof(int));
+		if (stat != nullptr) 
+			Sort::QuickSort(stat, 0, length - 1);
+		Sort::show(stat, length, "快速排序算法");
+		delete[](stat);//回收内存
+	}
+	static void QuickSort(int arr[],int low,int high) {//快速排序
+		if (low >= high) return;//已经有序
+		int key = arr[low];//默认基准为low
+		int i = low;
+		int j = high + 1;//因为j会先自减
+		while (i < j) {//当两个标记相遇时
+			while (i < j && arr[--j] > key);
+			while (i < j && arr[++i] < key);
+			if (i >= j) break;//已经分好了
+			Sort::exchange(&arr[i], &arr[j]);//交换i,j的值
+		}
+		Sort::exchange(&arr[low], &arr[j]);//将基准放入
+		Sort::QuickSort(arr, low, j - 1);
+		Sort::QuickSort(arr, j + 1, high);
+	}
 	//归并排序
 	//平均复杂度:O()
 	//最好复杂度:O()
