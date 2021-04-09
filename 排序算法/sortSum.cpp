@@ -85,23 +85,45 @@ public:
 		delete[](stat);//回收内存
 	}
 	//希尔排序
-	//平均复杂度:O()
+	//平均复杂度:O(n1.3-n2)
 	//最好复杂度:O()
 	//最坏复杂度:O()
-	//空间复杂度:O()
-	//稳定性:
+	//空间复杂度:O(1)
+	//稳定性:不稳定
+	static void ShellSort(const int arr[], const int length) {
+		int* stat = new int[length];
+		int gap = length / 2;
+		memcpy(stat, arr, length * sizeof(int));
+		while (gap) {
+			for (int i = 0; i < gap; i++) {//总共有gap-1个分组，对每个分组进行插入排序
+				//插入排序
+				for (int j = i + gap; j < length; j += gap) {//从第i组第一个元素开始，遍历每个组的元素，进行插入排序
+					int k = j - gap;//记录前一个元素的下标
+					while (k >= 0 && stat[k] > stat[k + gap]) {//k>=0说明还需要进行比较
+						Sort::exchange(&stat[k], &stat[k + gap]);
+						k -= gap;
+					}
+				}
+			}
+			gap /= 2;//缩小间距
+		}
+		Sort::show(stat, length, "希尔排序算法");
+		delete[](stat);//回收内存
+	}
 	//快速排序
 	//平均复杂度:O()
 	//最好复杂度:O()
 	//最坏复杂度:O()
 	//空间复杂度:O()
 	//稳定性:
+
 	//归并排序
 	//平均复杂度:O()
 	//最好复杂度:O()
 	//最坏复杂度:O()
 	//空间复杂度:O()
 	//稳定性:
+
 	//堆排序
 	//平均复杂度:O()
 	//最好复杂度:O()
@@ -116,4 +138,5 @@ int main()
 	Sort::BubbleSort(arr, 10);
 	Sort::SelectSort(arr, 10);
 	Sort::InsertSort(arr, 10);
+	Sort::ShellSort(arr,10);
 }
