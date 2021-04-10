@@ -140,12 +140,53 @@ public:
 		Sort::QuickSort(arr, j + 1, high);
 	}
 	//归并排序
-	//平均复杂度:O()
-	//最好复杂度:O()
-	//最坏复杂度:O()
-	//空间复杂度:O()
-	//稳定性:
-
+	//平均复杂度:O(nlogn)
+	//最好复杂度:O(nlogn)
+	//最坏复杂度:O(nlogn)
+	//空间复杂度:O(n)
+	//稳定性：稳定
+	static void MergeSortEnter(const int arr[],const int length) {
+		int* stat = new int[length];
+		int* result = new int[length];
+		memcpy(stat, arr, length * sizeof(int));
+		if (stat != nullptr&&result != nullptr) {
+			Sort::MergeSort(stat, 0, length - 1, result);
+		}
+		Sort::show(stat, length, "归并排序算法");
+		delete[](stat);//回收内存
+		delete[](result);//回收内存
+	}
+	static void MergeSort(int arr[],int low,int high,int result[]) {
+		if(low < high){
+			int mid = low + (high - low) / 2;//避免int溢出
+			Sort::MergeSort(arr, low, mid, result);
+			Sort::MergeSort(arr, mid+1, high, result);
+			Sort::Merge(arr,low,high,mid,result);
+		}
+	}
+	static void Merge(int arr[],int low,int high,int mid,int result[]) {
+		int i, j, k;
+		i = low;
+		j = mid + 1;
+		k = 0;
+		while (i <= mid && j <= high) {
+			if (arr[i] < arr[j]) {
+				result[k++] = arr[i++];
+			}
+			else {
+				result[k++] = arr[j++];
+			}
+		}
+		while (i <= mid) {
+			result[k++] = arr[i++];
+		}
+		while (j <= high) {
+			result[k++] = arr[j++];
+		}
+		for (int i = 0; i < k; i++) {
+			arr[low+i] = result[i];
+		}
+	}
 	//堆排序
 	//平均复杂度:O()
 	//最好复杂度:O()
@@ -161,4 +202,6 @@ int main()
 	Sort::SelectSort(arr, 10);
 	Sort::InsertSort(arr, 10);
 	Sort::ShellSort(arr,10);
+	Sort::QuickSortEnter(arr, 10);
+	Sort::MergeSortEnter(arr, 10);
 }
