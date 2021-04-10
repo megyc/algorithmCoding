@@ -51,7 +51,7 @@ public:
 		int i, j;
 		memcpy(stat, arr, length * sizeof(int));
 		if (stat != nullptr) {
-			for (i = 0; i < length - 2; i++) {//每次选择最小的放在目前的最前面
+			for (i = 0; i < length - 1; i++) {//每次选择最小的放在目前的最前面
 				int smallest = i;//记录最小下标
 				for (j = i + 1; j < length; j++) {
 					if (stat[j] < stat[smallest]) {
@@ -74,8 +74,8 @@ public:
 		int* stat = new int[length];
 		memcpy(stat, arr, length * sizeof(int));
 		if (stat != nullptr) {
-			for (int i = 1; i < length - 1; i++) {
-				for (int j = i + 1; j > 0 && stat[j] < stat[j - 1]; j--) {//和前一个比较,直到找到插入到合适的位置
+			for (int i = 0; i < length - 1; i++) {
+				for (int j = i + 1; j >= 0 && stat[j] < stat[j - 1]; j--) {//和前一个比较,直到找到插入到合适的位置
 					//交换两元素位置
 					exchange(&stat[j - 1], &stat[j]);
 				}
