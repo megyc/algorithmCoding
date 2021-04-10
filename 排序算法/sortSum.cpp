@@ -188,20 +188,55 @@ public:
 		}
 	}
 	//堆排序
-	//平均复杂度:O()
+	//平均复杂度:O(nlogn)
 	//最好复杂度:O()
 	//最坏复杂度:O()
-	//空间复杂度:O()
-	//稳定性:
+	//空间复杂度:O(1)
+	//稳定性:不稳定
+	static void HeapSort(const int arr[],const int length) {
+		int* stat = new int[length];
+		memcpy(stat, arr, length * sizeof(int));
+		if (stat != nullptr) {
+			//初始化大顶堆
+			for (int i = length / 2 - 1; i >= 0; i--) {
+				Sort::HeapAjust(stat, i, length - 1);
+			}
+			//交换顶部和最后一个元素，继续调整
+			for (int i = length - 1; i > 0; i--) {
+				Sort::exchange(&stat[0], &stat[i]);
+				Sort::HeapAjust(stat, 0, i - 1);
+			}
+		}
+		Sort::show(stat, length, "堆排序算法  ");
+		delete[](stat);
+	}
+	static void HeapAjust(int arr[], int start,int end) {//从i节点开始调整
+		int dad = start;
+		int son = 2 * dad + 1;
+		while (son <= end) {//子节点在范围内才会比较
+			//选择更大的那个儿子
+			if (son + 1 <= end && arr[son] < arr[son + 1]) {
+				son++;
+			}
+			if (arr[dad] > arr[son]) return;//不需要交换
+			else {
+				Sort::exchange(&arr[dad], &arr[son]);//交换位置
+				dad = son;//继续向下调整大顶堆
+				son = 2 * dad + 1;
+			}
+		}
+	}
 };
 
 int main()
 {
 	const int arr[] = { 4,6,5,7,1,3,2,8,0,9 };
-	Sort::BubbleSort(arr, 10);
-	Sort::SelectSort(arr, 10);
-	Sort::InsertSort(arr, 10);
-	Sort::ShellSort(arr,10);
-	Sort::QuickSortEnter(arr, 10);
-	Sort::MergeSortEnter(arr, 10);
+	int length = (int)sizeof(arr) / sizeof(*arr);
+	Sort::BubbleSort(arr, length);
+	Sort::SelectSort(arr, length);
+	Sort::InsertSort(arr, length);
+	Sort::ShellSort(arr, length);
+	Sort::QuickSortEnter(arr, length);
+	Sort::MergeSortEnter(arr, length);
+	Sort::HeapSort(arr, length);
 }
