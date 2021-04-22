@@ -1,0 +1,16 @@
+/**
+ * 344. 反转字符串
+*/
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        char temp;
+        int left = 0;
+        int right = s.size() - 1;
+        while (left < right) {
+            swap(s[left], s[right]);
+            left++;
+            right--;
+        }
+    }
+};
